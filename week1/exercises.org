@@ -14,7 +14,9 @@ print(result);
 
 ** DONE Q4. Suppose Bob receives a messages signed using a digital signature scheme with Alice’s secret signing key. Does it prove that Alice saw the message and chose to sign.
 ---
+
 *NOTE: Digital Signatures*
+
 A pair of signing $\sigma$ and verifying $v$ algorithms such that:
 
 \begin{equation}
@@ -26,28 +28,36 @@ v\left(P_k,m,s\right) \in {true,false}
 \end{equation}
 
 where:
-m : message
-$S_k$ : secret (private) key
-s: message signed with a private key $S_k$
-$P_k$ : public key
+- m : message
+- $S_k$ : secret (private) key
+- s: message signed with a private key $S_k$
+- $P_k$ : public key
+
 ---
 
-Not really, anyone holding the $S_k$ can sign it, so there can be a link to Alice's identity, but there doesn't have to be, or she could have leaked the key.
+Anyone holding the $S_k$ can sign it, so there can be a link to Alice's identity, but there doesn't have to be, or she could have leaked the key.
 
 ** DONE Q6. Suppose a chosen-ciphertext attacker cannot recover the secret decryption key for an encryption scheme. Does this mean the encryption scheme is secure?
 ---
+
 *NOTE: Perfect Secrecy*
-A cipher $(E,D)$ over $(K,M,C)$ has perfect secrecy if
+
+A cipher $(E,D)$ over $(K,M,C)$ has perfect secrecy if:
+
 \begin{equation}
-\forall m_o,m_1 \in M \left |, m_0 \right |=\left | m_1 \right | \text{ and } \forall c\in C
+\forall m_o,m_1 \in M,
+\left |m_0 \right |=\left | m_1 \right | 
+\text{ and } \forall c\in C
+
 Pr\left \{ E(S_k,m_0)=c \right \}=Pr\left \{ E(S_k,m_1)=c \right \}
 \end{equation}
 
-where $S_k\inK$
+where $S_k \in K$
+
 ---
 
-In other words assuming a most powerfull attacker cannot recover the key given only the ciphertext, the cipher has perfect secrecy.
-Conversly surviving a chosen-ciphertext attack is not enough to deem it perfectly secure, as the attacker was allowed to learn more information that the ciphertext only.
+In other words, assuming a most powerfull attacker cannot recover the key given only the ciphertext, the cipher has perfect secrecy.
+Conversly surviving a chosen-ciphertext attack is not enough to deem it perfectly secure, as the attacker was allowed to learn more information that in the ciphertext-only attack.
 
 ** TODO Q7. Consider a symmetric-key cryptosystem in which cryptographic keys are randomly selected from the set of all n-bit strings. Approximately what should n be in order to provide 128 bits of security against a birthday attack.
 * General [1/9]
@@ -59,7 +69,7 @@ These links may help: https://cryptography.rs/ https://lib.rs/ (librs is equival
 ** TODO You’re implementing a Tweakable Encryption scheme. You need to know what standard API users will expect. Find a reference for the standard API and write the function signatures for encryption and decryption.
 ** TODO You want to understand a paper on a new polynomial commitment scheme, but you’ve been trying for more than an hour, and the math is over your head. What do you do?
 ** DONE Implement the Vignere cipher in 100 lines or less.
-see /vignere/ project.
+See /vignere/ project.
 ** TODO What is a side channel attack? Is your cipher implementation constant time?
 ** TODO Extra: Read New Directions in Cryptography.
 ** TODO Extra: Consider ways to contribute what you learned this week to the Uncloak knowledge graph.
