@@ -50,7 +50,7 @@ In other words assuming a most powerfull attacker cannot recover the key given o
 Conversly surviving a chosen-ciphertext attack is not enough to deem it perfectly secure, as the attacker was allowed to learn more information that the ciphertext only.
 
 ** TODO Q7. Consider a symmetric-key cryptosystem in which cryptographic keys are randomly selected from the set of all n-bit strings. Approximately what should n be in order to provide 128 bits of security against a birthday attack.
-* General [0/9]
+* General [1/9]
 ** TODO Suppose you read about RSA encryption and wanted to find it’s standard specification. Where would you look?
 ** TODO Find two libraries for each of RSA, TLS/SSL, and AEAD. Evaluate the maturity each library, and skim the code.
 What about the library structure makes sense? How is their documentation?
@@ -58,7 +58,8 @@ These links may help: https://cryptography.rs/ https://lib.rs/ (librs is equival
 ** TODO Benchmark the speed of an algorithm in the two different implementations with Criterion.
 ** TODO You’re implementing a Tweakable Encryption scheme. You need to know what standard API users will expect. Find a reference for the standard API and write the function signatures for encryption and decryption.
 ** TODO You want to understand a paper on a new polynomial commitment scheme, but you’ve been trying for more than an hour, and the math is over your head. What do you do?
-** TODO Implement the Vignère cipher in 100 lines or less.
+** DONE Implement the Vignere cipher in 100 lines or less.
+see /vignere/ project.
 ** TODO What is a side channel attack? Is your cipher implementation constant time?
 ** TODO Extra: Read New Directions in Cryptography.
 ** TODO Extra: Consider ways to contribute what you learned this week to the Uncloak knowledge graph.
