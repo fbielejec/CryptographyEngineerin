@@ -12,8 +12,30 @@ print(result);
 #+RESULTS:
 : 435
 
- Q4. Suppose Bob receives a messages signed using a digital signature scheme with Alice’s secret signing key. Does it prove that Alice saw the message and chose to sign.
- Q6. Suppose a chosen-ciphertext attacker cannot recover the secret decryption key for an encryption scheme. Does this mean the encryption scheme is secure?
+** Q4. Suppose Bob receives a messages signed using a digital signature scheme with Alice’s secret signing key. Does it prove that Alice saw the message and chose to sign.
+---
+*NOTE: Digital Signatures*
+A pair of signing $\sigma$ and verifying $v$ algorithms such that:
+
+\begin{equation}
+s=\sigma\left(S_k,m\right)
+\end{equation}
+
+\begin{equation}
+v\left(P_k,m,s\right) \in {true,false}
+\end{equation}
+
+where:
+m : message
+$S_k$ : secret (private) key
+s: message signed with a private key $S_k$
+$P_k$ : public key
+---
+
+Not really, anyone holding the $S_k$ can sign it, so there can be a mapping to Alice's identity, but there doesn't have to.
+
+** Q6. Suppose a chosen-ciphertext attacker cannot recover the secret decryption key for an encryption scheme. Does this mean the encryption scheme is secure?
+
  Q7. Consider a symmetric-key cryptosystem in which cryptographic keys are randomly selected from the set of all n-bit strings. Approximately what should n be in order to provide 128 bits of security against a birthday attack.
 * General
 - Suppose you read about RSA encryption and wanted to find it’s standard specification. Where would you look?
