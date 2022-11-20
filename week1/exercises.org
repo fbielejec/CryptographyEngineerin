@@ -2,9 +2,10 @@
 ** TODO Q10. Describe a concrete example, excluding the ones given in this chapter, where improving the security of a system against one type of attack can increase the likelihood of other attacks.
 * Chapter 2 [3/4]
 ** DONE Q3. Consider a group of 30 people who wish to establish pair-wise secure communications using symmetric-key cryptography. How many keys need to be exchanged in total.
+In a set size n there are n(n − 1)/2 pairs of elements:
 #+header: :exports results
 #+header: :var n=30
-#+BEGIN_SRC maxima 2:results output
+#+BEGIN_SRC maxima :results output
 result: (n*(n-1))/2;
 print(result);
 #+END_SRC
@@ -60,6 +61,20 @@ In other words, assuming a most powerfull attacker cannot recover the key given 
 Conversly surviving a chosen-ciphertext attack is not enough to deem it perfectly secure, as the attacker was allowed to learn more information that in the ciphertext-only attack.
 
 ** TODO Q7. Consider a symmetric-key cryptosystem in which cryptographic keys are randomly selected from the set of all n-bit strings. Approximately what should n be in order to provide 128 bits of security against a birthday attack.
+If one want a level of security of 128 bits, that means any brute-force attack would need 2^128 steps before finding a collision. 
+And since we know that in a set of N elements a first collision will happen approximately after seeing $\sqrt{N}$ elements:
+
+#+name: solve-maxima
+#+header: :exports results
+#+begin_src maxima :results output
+  programmode: false;
+  eq: 2^(n/2)=2^128;
+  solution: solve(eq, n);
+  print(bfloat(solution));
+#+end_src
+
+# n=256
+
 * General [1/9]
 ** TODO Suppose you read about RSA encryption and wanted to find it’s standard specification. Where would you look?
 ** TODO Find two libraries for each of RSA, TLS/SSL, and AEAD. Evaluate the maturity each library, and skim the code.
