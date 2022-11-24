@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+  "vignere",
+  "rsa-benchmark",
+]

@@ -1,0 +1,16 @@
+[package]
+edition = "2021"
+name = "rsa-benchmark"
+version = "0.1.0"
+
+[dependencies]
+rsa = { version = "0.7.2" }
+rand = { version = "0.8" }
+anyhow = { version = "1.0" }
+
+[dev-dependencies]
+criterion = { version = "0.3" }
+
+[[bench]]
+name = "bench"
+harness = false
