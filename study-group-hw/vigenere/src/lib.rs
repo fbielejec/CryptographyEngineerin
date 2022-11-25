@@ -43,7 +43,7 @@ mod tests {
     use super::*;
     #[test]
     fn vignere_cipher() {
-        let message = "WHATANICEDAYTODAY";
+        let message = "HELLOWORLD";
         let keyword = "CRYPTO";
 
         let key = generate_key(keyword, message.len());
