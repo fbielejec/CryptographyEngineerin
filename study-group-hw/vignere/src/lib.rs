@@ -1,4 +1,4 @@
-pub fn encode_text(message: &str, key: &str) -> String {
+pub fn encrypt(message: &str, key: &str) -> String {
     (0..message.len())
         .map(|index| {
             let c = (key.chars().nth(index).unwrap().to_ascii_uppercase() as i32
@@ -10,10 +10,10 @@ pub fn encode_text(message: &str, key: &str) -> String {
         .collect()
 }
 
-pub fn decode_text(cipher_text: &str, key: &str) -> String {
-    (0..cipher_text.len())
+pub fn decrypt(ciphertext: &str, key: &str) -> String {
+    (0..ciphertext.len())
         .map(|index| {
-            let c = (cipher_text.chars().nth(index).unwrap().to_ascii_uppercase() as i32
+            let c = (ciphertext.chars().nth(index).unwrap().to_ascii_uppercase() as i32
                 - key.chars().nth(index).unwrap().to_ascii_uppercase() as i32
                 + 26)
                 % 26;
@@ -48,9 +48,8 @@ mod tests {
 
         let key = generate_key(keyword, message.len());
 
-        let cipher_text = encode_text(message, &key);
-
-        let decoded_text = decode_text(&cipher_text, &key);
+        let cipher_text = encrypt(message, &key);
+        let decoded_text = decrypt(&cipher_text, &key);
 
         assert_eq!(decoded_text, message);
     }

@@ -47,7 +47,7 @@ A cipher $(E,D)$ over $(K,M,C)$ has perfect secrecy if:
 
 \begin{equation}
 \forall m_o,m_1 \in M,
-\left |m_0 \right |=\left | m_1 \right | 
+\left |m_0 \right |=\left | m_1 \right |
 \text{ and } \forall c\in C
 
 Pr\left \{ E(S_k,m_0)=c \right \}=Pr\left \{ E(S_k,m_1)=c \right \}
@@ -61,7 +61,7 @@ In other words, assuming a most powerfull attacker cannot recover the key given 
 Conversly surviving a chosen-ciphertext attack is not enough to deem it perfectly secure, as the attacker was allowed to learn more information that in the ciphertext-only attack.
 
 ** DONE Q7. Consider a symmetric-key cryptosystem in which cryptographic keys are randomly selected from the set of all n-bit strings. Approximately what should n be in order to provide 128 bits of security against a birthday attack.
-If one want a level of security of 128 bits, that means any brute-force attack would need 2^128 steps before finding a collision. 
+If one want a level of security of 128 bits, that means any brute-force attack would need 2^128 steps before finding a collision.
 And since we know that in a set of N elements a first collision will happen approximately after seeing $\sqrt{N}$ elements:
 
 #+name: solve-maxima
@@ -75,16 +75,22 @@ And since we know that in a set of N elements a first collision will happen appr
 
 # n=256
 
-* General [1/7]
+* General [3/5]
 ** +Suppose you read about RSA encryption and wanted to find it’s standard specification. Where would you look?+
 ** IN-PROGRESS Find two libraries for each of RSA, TLS/SSL, and AEAD. Evaluate the maturity each library, and skim the code.
 What about the library structure makes sense? How is their documentation?
 These links may help: https://cryptography.rs/ https://lib.rs/ (librs is equivalent to crates.io, with a different interface)
-** TODO Benchmark the speed of an algorithm in the two different implementations with Criterion.
+** DONE Benchmark the speed of an algorithm in the two different implementations with Criterion.
+see rsa-benchamark crate.
 ** +You’re implementing a Tweakable Encryption scheme. You need to know what standard API users will expect. Find a reference for the standard API and write the function signatures for encryption and decryption.+
-** TODO You want to understand a paper on a new polynomial commitment scheme, but you’ve been trying for more than an hour, and the math is over your head. What do you do?
+** DONE You want to understand a paper on a new polynomial commitment scheme, but you’ve been trying for more than an hour, and the math is over your head. What do you do?
+I'd approach smarter folk, ask on fora, SO and generally use the wonders of the Internet.
 ** DONE Implement the Vignere cipher in 100 lines or less.
-See /vignere/ project.
-** TODO What is a side channel attack? Is your cipher implementation constant time?
+See /vignere/ crate.
+*** DONE What is a side channel attack?
+Any additional information that can be obtained by observing and analysing the algo "in action".
+Is there some power or memory uasge patterns? Do they correlate with inputs? Those sort of things.
+*** DONE Is your cipher implementation constant time?
+No, it's linear in message size (one loop).
 ** TODO Extra: Read New Directions in Cryptography.
-** TODO Extra: Consider ways to contribute what you learned this week to the Uncloak knowledge graph.
+** Extra: Consider ways to contribute what you learned this week to the Uncloak knowledge graph.
