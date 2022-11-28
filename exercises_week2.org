@@ -1,0 +1,3 @@
+* IN-PROGRESS Chapter 3
+** TODO How much space would be required to store a table for an entire idealized block cipher that operates on 64-bit blocks and has 80-bit keys?
+
