@@ -1,5 +1,6 @@
 * Chapter 1 [0/1]
 ** TODO Q10. Describe a concrete example, excluding the ones given in this chapter, where improving the security of a system against one type of attack can increase the likelihood of other attacks.
+Attacks against AES with 256-bit keys are more efficient than the attacks against AES with 192-bit keys.
 * Chapter 2 [4/4]
 ** DONE Q3. Consider a group of 30 people who wish to establish pair-wise secure communications using symmetric-key cryptography. How many keys need to be exchanged in total.
 In a set size n there are n(n − 1)/2 pairs of elements:

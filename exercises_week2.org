@@ -1,3 +1,58 @@
 * IN-PROGRESS Chapter 3
-** TODO How much space would be required to store a table for an entire idealized block cipher that operates on 64-bit blocks and has 80-bit keys?
+** DONE Question 1
+/How much space would be required to store a table for an entire idealized block cipher that operates on 64-bit blocks and has 80-bit keys?/
 
+An ideal block cipher is a random permutation, and the different permutations for the different key values are chosen independently.
+In other words it is a uniform distribution of lookup tables, with keys being n-bit inputs and values n-bit outputs and there is one of these tables for each key value.
+
+Here the table has 2^n entries, with each entry occupying n-bits, therefore we get 2^64*64 bits of storage per one table, or
+about 2.3*10^9 gigabytes and there are 2^80 possible 80-bit keys:
+
+#+header: :exports results
+#+BEGIN_SRC maxima :results output
+result: 2^64*2^80*64;
+print(result);
+#+END_SRC
+
+** DONE Question 2
+/Suppose you have a processor that can perform a single DES encryption or decryption operation in 2^26 seconds. Suppose you also have a large number of plaintext-ciphertext pairs for DES under a single unknown key. How many hours would it take, on average, to find that DES key, using an exhaustive search approach and a single processor? How many hours would it take, with a collection of 2^14 processors?/
+
+DES has a key size of 56 bits, therefore there are 2^56 possible keys to go through to find a match such that:
+$DES_k(p)=c$ where $p$ is a plaintext and $c$ is the corresponding ciphertext.
+
+# An exhaustive search would mean doing encryption $2^56-1$ times (we do not need the last invocation since in that case we can conclude that the remaining key is the matching one).
+The keys are distributed uniformly (each key has the same probbaility $1/2^56$ of being the correct one), and the expected value of such a distribution is $2^56/2=2^55$.
+
+Therefore we would need to be doing the encryption $2^55-1$ times on average (we do not need the last invocation since in that case we can conclude that the remaining key is the matching one) to find the right key and it would take:
+
+$(2^55-1)*2^26$ seconds on a single processor or $(2^55-1)*2^26/2^14=(2^55-1)*2^12$ seconds concurrently.
+
+Note that actually even one plaintext-ciphertext pair is enough to launch such a brute-force attack.
+** TODO Question 3
+/Consider a new block cipher, DES2, that consists only of two rounds of the DES block cipher. DES2 has the same block and key size as DES. For this question you should consider the DES $F$ function as a black box that takes two inputs, a 32-bit data segment and a 48-bit round key, and that produces a 32-bit output. Suppose you have a large number of plaintext-ciphertext pairs for DES2 under a single, unknown key. Given an algorithm for recovering the 48-bit round key for round 1 and the 48-bit round key for round 2. Your algorithm should require fewer operations than an exhaustive search for an entire 56-bit DES key. Can your algorithm be converted into a distinguishable attack against DES2?/
+** TODO Question 4
+/Familiarize yourself with a cryptographic CLI tools. A popular open source package is OpenSSL. Using an existing cryptographic library, decrypt the following ciphertext (in hex)
+
+        53 9B 33 3B 39 70 6D 14 90 28 CF E1 D9 D4 A4 07
+
+with the following 256-bit key (also in hex)
+
+        80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01
+
+using AES./
+
+** TODO Question 9
+/Using an existing cryptography library, encrypt the following plaintext (in hex)
+
+        29 6C 93 FD F4 99 AA EB 41 94 BA BC 2E 63 56 1D
+
+with the following 256-bit key (also in hex)
+
+        80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01
+
+using AES. Then re-encrypt and decrypt it using a 3072-bit RSA key with GnuPG, or your choice of asymmetric crypto CLI./
+** TODO Question 10
+/Write a program that experimentally demonstrates the complementation property for DES. This program should take as input a key $K$ and a plaintext $P$ and demonstrate that the DES complementation property holds for this key and plaintext. You may use an existing cryptography library for this exercise./
+* TODO Chapter 4
