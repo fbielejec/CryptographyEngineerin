@@ -3,4 +3,5 @@
 members = [
   "vigenere",
   "rsa-benchmark",
+  "aes-openssl",  
 ]

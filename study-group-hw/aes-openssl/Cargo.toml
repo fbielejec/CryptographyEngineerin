@@ -1,0 +1,8 @@
+[package]
+name = "aes-openssl"
+edition = "2021"
+version = "0.1.0"
+
+[dependencies]
+anyhow = { version = "1.0" }
+openssl = "0.10.43"
