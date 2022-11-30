@@ -55,10 +55,23 @@ with the following 256-bit key (also in hex)
 
 using AES. 
 Then re-encrypt and decrypt it using a 3072-bit RSA key with GnuPG, or your choice of asymmetric crypto CLI./
-** TODO Question 10
+** DONE Question 10
 /Write a program that experimentally demonstrates the complementation property for DES.
 This program should take as input a key $K$ and a plaintext $P$ and demonstrate that the DES complementation property holds for this key and plaintext.
 You may use an existing cryptography library for this exercise./
+
+---
+
+*NOTE: Complementation Property of DES*
+
+$E(\bar{K},\bar{P})=\overline{E(K,P)}$
+
+where $\bar{X}$ is a complement of all bits in $X$.
+
+In other words, if you encrypt the complement of the plaintext with the complement of the key, you get the complement of the (original) ciphertext.
+
+---
+
 * TODO Chapter 4
 ** TODO Question 1
 /Let $P$ be a plaintext and let $l(P)$ be the length of P in bytes.

@@ -59,7 +59,33 @@ fn question9() {
     println!("{:?}", out);
 }
 
+fn question10() {
+    let complement = |arr: &[u8]| -> Vec<u8> { arr.iter().map(|b| !b).collect() };
+
+    // DES 56 bit key, but it somehow takes 64 bits, go figure
+    let key: [u8; 8] = [0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01];
+
+    let plaintext: [u8; 8] = [
+        u8::MAX,
+        u8::MAX,
+        u8::MAX,
+        u8::MAX,
+        u8::MAX,
+        u8::MAX,
+        u8::MAX,
+        u8::MAX,
+    ];
+
+    let cipher = Cipher::des_cbc();
+
+    let left = encrypt(cipher, &complement(&key), None, &complement(&plaintext)).unwrap();
+    let right = complement(&encrypt(cipher, &key, None, &plaintext).unwrap());
+
+    assert_eq!(left, right)
+}
+
 fn main() {
     question4();
     question9();
+    question10();
 }
