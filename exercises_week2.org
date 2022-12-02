@@ -172,4 +172,4 @@ $C_i=E(K,P_i \oplus C){i-1}), \forall i=1...k$
 
 ---
 
-** TODO Implement a pair of functions: A [PKCS](https://en.wikipedia.org/wiki/PKCS_7) message padding function, and a padding validation function that takes a message and validates whether it has a correct padding.
+** DONE Implement a pair of functions: A [PKCS](https://en.wikipedia.org/wiki/PKCS_7) message padding function, and a padding validation function that takes a message and validates whether it has a correct padding.

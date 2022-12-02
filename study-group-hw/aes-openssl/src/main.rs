@@ -1,3 +1,5 @@
+use std::iter::repeat;
+
 use openssl::{
     rsa::{Padding, Rsa},
     symm::{decrypt, encrypt, Cipher},
@@ -104,8 +106,42 @@ fn question44() {
     let plaintext = decrypt(cipher, &key, Some(&iv), &ciphertext).unwrap();
 
     println!("Question 4.4: {:?}", plaintext);
+}
 
-    // todo!();
+fn pkcs7(plaintext: Vec<u8>) -> Vec<u8> {
+    assert!(plaintext.len().le(&255));
+
+    let padding_byte = 255u8 - plaintext.len() as u8;
+
+    let mut padded_plaintext = Vec::with_capacity(255);
+    padded_plaintext.extend_from_slice(&plaintext);
+
+    let padding = repeat(padding_byte).take(padding_byte as usize);
+    padded_plaintext.extend(padding);
+
+    padded_plaintext
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_pkcs7() {
+        let plaintext: [u8; 8] = [
+            u8::MAX,
+            u8::MAX,
+            u8::MAX,
+            u8::MAX,
+            u8::MAX,
+            u8::MAX,
+            u8::MAX,
+            u8::MAX,
+        ];
+
+        let padded = pkcs7(plaintext.into());
+        // that's a bit dumb but meh
+        assert_eq!(padded.len(), 255);
+    }
 }
 
 fn main() {
