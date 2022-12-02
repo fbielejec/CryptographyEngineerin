@@ -1,3 +1,5 @@
+* General
+https://hackmd.io/j5PPUJkqTpOd-9llD0wrUQ?view
 * IN-PROGRESS Chapter 3
 ** DONE Question 1
 /How much space would be required to store a table for an entire idealized block cipher that operates on 64-bit blocks and has 80-bit keys?/
@@ -14,22 +16,31 @@ result: 2^64*2^80*64;
 print(result);
 #+END_SRC
 
+$2^64*2^80*64=2^64*2^80*2^8-2^6=2^150$
+
 ** DONE Question 5
-/Suppose you have a processor that can perform a single DES encryption or decryption operation in 2^26 seconds. Suppose you also have a large number of plaintext-ciphertext pairs for DES under a single unknown key. How many hours would it take, on average, to find that DES key, using an exhaustive search approach and a single processor? How many hours would it take, with a collection of 2^14 processors?/
+/Suppose you have a processor that can perform a single DES encryption or decryption operation in 2^-26 seconds. Suppose you also have a large number of plaintext-ciphertext pairs for DES under a single unknown key. How many hours would it take, on average, to find that DES key, using an exhaustive search approach and a single processor? How many hours would it take, with a collection of 2^14 processors?/
 
 DES has a key size of 56 bits, therefore there are 2^56 possible keys to go through to find a match such that:
 $DES_k(p)=c$ where $p$ is a plaintext and $c$ is the corresponding ciphertext.
 
 # An exhaustive search would mean doing encryption $2^56-1$ times (we do not need the last invocation since in that case we can conclude that the remaining key is the matching one).
-The keys are distributed uniformly (each key has the same probbaility $1/2^56$ of being the correct one), and the expected value of such a distribution is $2^56/2=2^55$.
+The keys are distributed uniformly (each key has the same probaility $1/2^{56}$ of being the correct one), and the expected value of such a distribution is $2^{56}/2=2^{55}$.
 
-Therefore we would need to be doing the encryption $2^55-1$ times on average (we do not need the last invocation since in that case we can conclude that the remaining key is the matching one) to find the right key and it would take:
+Therefore to find the right key and it would take:
 
-$(2^55-1)*2^26$ seconds on a single processor or $(2^55-1)*2^26/2^14=(2^55-1)*2^12$ seconds concurrently.
+$2^{55}*2^{-26}$ seconds on a single processor or $2^55*2^{-26}/2^14=2^{55-26-15}=2^15$ seconds concurrently.
+This time "shrinks" time $1/n$ if we have $n$ independent pairs: $2^15/n$
 
-Note that actually even one plaintext-ciphertext pair is enough to launch such a brute-force attack.
+Note that even one such plaintext-ciphertext pair is enough to launch such a brute-force attack.
 ** TODO Question 6
-/Consider a new block cipher, DES2, that consists only of two rounds of the DES block cipher. DES2 has the same block and key size as DES. For this question you should consider the DES $F$ function as a black box that takes two inputs, a 32-bit data segment and a 48-bit round key, and that produces a 32-bit output. Suppose you have a large number of plaintext-ciphertext pairs for DES2 under a single, unknown key. Given an algorithm for recovering the 48-bit round key for round 1 and the 48-bit round key for round 2. Your algorithm should require fewer operations than an exhaustive search for an entire 56-bit DES key. Can your algorithm be converted into a distinguishable attack against DES2?/
+/Consider a new block cipher, DES2, that consists only of two rounds of the DES block cipher.
+DES2 has the same block and key size as DES.
+For this question you should consider the DES $F$ function as a black box that takes two inputs, a 32-bit data segment and a 48-bit round key, and that produces a 32-bit output.
+Suppose you have a large number of plaintext-ciphertext pairs for DES2 under a single, unknown key.
+Given an algorithm for recovering the 48-bit round key for round 1 and the 48-bit round key for round 2.
+Your algorithm should require fewer operations than an exhaustive search for an entire 56-bit DES key.
+Can your algorithm be converted into a distinguishable attack against DES2?/
 ** DONE Question 8
 /Familiarize yourself with a cryptographic CLI tools.
 A popular open source package is OpenSSL.
@@ -53,7 +64,7 @@ with the following 256-bit key (also in hex)
         80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01
 
-using AES. 
+using AES.
 Then re-encrypt and decrypt it using a 3072-bit RSA key with GnuPG, or your choice of asymmetric crypto CLI./
 ** DONE Question 10
 /Write a program that experimentally demonstrates the complementation property for DES.
@@ -72,31 +83,61 @@ In other words, if you encrypt the complement of the plaintext with the compleme
 
 ---
 
-* TODO Chapter 4
-** TODO Question 1
+* IN-PROGRESS Chapter 4
+** DONE Question 1
 /Let $P$ be a plaintext and let $l(P)$ be the length of P in bytes.
 Let $b$ be the block size of the block cipher in bytes. Explain why the following is not a good padding scheme:
 
 - Determine the minimum number of padding bytes necessary in order to pad the plaintext to a block boundary. This is a number $n$ which satisfies $0 \leq n \leq b-1$ and $n + l(P)$ is a multiple of $b$. Pad the plaintext by appending $n$ bytes, each with value $n$./
-** TODO Question 3
-/Suppose you, as an attacker, observe the following 32-byte ciphertext C (in hex)
+
+This is basically the same counter-example as padding with all 0's given in the book, but instead of 0's a value of $n$ is used.
+The problem is the same - this padding may not be reversible - if the original plaintext ends with one or more bytes of value $n$, or if padding is of length 0.
+** DONE Question 3
+/Suppose you, as an attacker, observe the following 32-byte ciphertext C (in hex):
 
 46 64 DC 06 97 BB FE 69 33 07 15 07 9B A6 C2 3D
 2B 84 DE 4F 90 8D 7D 34 AA CE 96 8B 64 F3 DF 75
 
-and the following 32-byte ciphertext
-C' (also in hex):
+and the following 32-byte ciphertext C' (also in hex):
 
 51 7E CC 05 C3 BD EA 3B 33 57 0E 1B D8 97 D5 30
 7B D0 91 6B 8D 82 6B 35 B7 8B BB 8D 74 E2 C7 3B.
 
-Suppose you know these ciphertexts were generated using CTR mode with the same nonce. The nonce is implicit, so it is not included in the ciphertext. You also know that the plaintext P corresponding to C is
+Suppose you know these ciphertexts were generated using CTR mode with the same nonce. 
+The nonce is implicit, so it is not included in the ciphertext. 
+You also know that the plaintext P corresponding to C is:
 
 43 72 79 70 74 6F 67 72 61 70 68 79 20 43 72 79
 70 74 6F 67 72 61 70 68 79 20 43 72 79 70 74 6F.
 
-What information, if any, can you infer about the plaintext P corresponding to C'?/
-** TODO Question 4
+What information, if any, can you infer about the plaintext P' corresponding to C'?/
+
+---
+*NOTE: CTR mode*
+
+$K_i=E_{K}(\text{nonce}||i)$ for $i=1,..,k$
+
+Encryption:
+$C_i = K_i \oplus P_i$
+
+Decryption:
+P_i = C_i \oplus K_i$
+
+---
+
+Just knowing that the nonce is shared between the two message is not enough to recover any information about the plaintext, since it is concatenated with the message counter.
+An attacker would need to know the nonce *and* the counter, cause a collision using a known plaintext and XOR it with the ciphertext of an intercepted message to decrypt that block. 
+
+In that case it would be the same as re-using the same key in a one-time-pad:
+ 
+$C=P \oplus K | P \oplus$ 
+
+from here I get the key (by XORing both sides with P):
+$K=P \oplus C$
+
+and $P^{'}=C^{'} \oplus P \oplus C$
+
+** IN-PROGRESS Question 4
 /The ciphertext (in hex):
 
 87 F3 48 FF 79 B8 11 AF 38 57 D6 71 8E 5F 0F 91
@@ -113,13 +154,22 @@ using CBC mode with a random IV.
 The IV is included at the beginning of the ciphertext.
 Decrypt this ciphertext.
 You may use an existing cryptography library for this exercise./
-** TODO Question 6
+** IN-PROGRESS Question 6
 /Let $P_1,P_2$ be a message that is two blocks long, and let $P_1^'$ be a message that is one block long.
 
 Let $C_0,C_1,C_2$ be the encryption of $P_1,P_2$ using CBC mode with a random IV and a random key, and let $C_0^',C_1^'$ be the encryption of $P_1^'$ using CBC mode with a random IV and the same key.
 
 Suppose an attacker knows $P1,P2$ and suppose the attacker intercepted and thus know $C_0,C_1,C_2$ and $C_0,C_1$.
-Further suppose that, by random chance, $C_1=C_2$.
+Further suppose that, by random chance, $C_1^'=C_2$.
 
 Show that the attacker can compute $P_1^'$./
+
+---
+
+*NOTE: CBC mode*
+
+$C_i=E(K,P_i \oplus C){i-1}), \forall i=1...k$
+
+---
+
 ** TODO Implement a pair of functions: A [PKCS](https://en.wikipedia.org/wiki/PKCS_7) message padding function, and a padding validation function that takes a message and validates whether it has a correct padding.

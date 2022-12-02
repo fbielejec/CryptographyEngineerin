@@ -8,13 +8,11 @@ use openssl::{
 // -d : decrypt
 // -K : key
 // -nopad : disable block padding
-fn question4() {
+fn question38() {
     let ciphertext = [
         0x53, 0x9B, 0x33, 0x3B, 0x39, 0x70, 0x6D, 0x14, 0x90, 0x28, 0xCF, 0xE1, 0xD9, 0xD4, 0xA4,
         0x07,
     ];
-
-    // println!("{:?}", &ciphertext);
 
     let key = [
         0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -22,14 +20,14 @@ fn question4() {
         0x00, 0x01,
     ];
 
-    let cipher = Cipher::aes_256_ecb();
+    let cipher = Cipher::aes_256_cbc();
 
     let plaintext = decrypt(cipher, &key, None, &ciphertext).unwrap();
 
-    println!("{:?}", plaintext);
+    println!("Question 3.8: {:?}", plaintext);
 }
 
-fn question9() {
+fn question39() {
     let plaintext = [
         0x29, 0x6C, 0x93, 0xFD, 0xF4, 0x99, 0xAA, 0xEB, 0x41, 0x94, 0xBA, 0xBC, 0x2E, 0x63, 0x56,
         0x1D,
@@ -41,11 +39,11 @@ fn question9() {
         0x00, 0x01,
     ];
 
-    let cipher = Cipher::aes_256_ecb();
+    let cipher = Cipher::aes_256_cbc();
 
     let data = encrypt(cipher, &key, None, &plaintext).unwrap();
 
-    println!("{:?}", data);
+    // println!("{:?}", data);
 
     let rsa = Rsa::generate(3072).unwrap();
     let padding = Padding::PKCS1;
@@ -56,10 +54,10 @@ fn question9() {
     let mut out = vec![0; rsa.size() as usize];
     rsa.private_decrypt(&to, &mut out, padding).unwrap();
 
-    println!("{:?}", out);
+    println!("Question 3.9: {:?}", out);
 }
 
-fn question10() {
+fn question310() {
     let complement = |arr: &[u8]| -> Vec<u8> { arr.iter().map(|b| !b).collect() };
 
     // DES 56 bit key, but it somehow takes 64 bits, go figure
@@ -84,8 +82,35 @@ fn question10() {
     assert_eq!(left, right)
 }
 
+fn question44() {
+    let key: [u8; 32] = [
+        0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x01,
+    ];
+
+    let ciphertext_with_iv: [u8; 48] = [
+        0x87, 0xF3, 0x48, 0xFF, 0x79, 0xB8, 0x11, 0xAF, 0x38, 0x57, 0xD6, 0x71, 0x8E, 0x5F, 0x0F,
+        0x91, //
+        0x7C, 0x3D, 0x26, 0xF7, 0x73, 0x77, 0x63, 0x5A, 0x5E, 0x43, 0xE9, 0xB5, 0xCC, 0x5D, 0x05,
+        0x92, 0x6E, 0x26, 0xFF, 0xC5, 0x22, 0x0D, 0xC7, 0xD4, 0x05, 0xF1, 0x70, 0x86, 0x70, 0xE6,
+        0xE0, 0x17,
+    ];
+
+    let cipher = Cipher::aes_256_cbc();
+
+    let iv = ciphertext_with_iv[..16].to_owned();
+    let ciphertext = ciphertext_with_iv[16..].to_owned();
+    let plaintext = decrypt(cipher, &key, Some(&iv), &ciphertext).unwrap();
+
+    println!("Question 4.4: {:?}", plaintext);
+
+    // todo!();
+}
+
 fn main() {
-    question4();
-    question9();
-    question10();
+    question38();
+    question39();
+    question310();
+    // question44();
 }
