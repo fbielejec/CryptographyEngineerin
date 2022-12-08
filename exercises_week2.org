@@ -103,8 +103,8 @@ and the following 32-byte ciphertext C' (also in hex):
 51 7E CC 05 C3 BD EA 3B 33 57 0E 1B D8 97 D5 30
 7B D0 91 6B 8D 82 6B 35 B7 8B BB 8D 74 E2 C7 3B.
 
-Suppose you know these ciphertexts were generated using CTR mode with the same nonce. 
-The nonce is implicit, so it is not included in the ciphertext. 
+Suppose you know these ciphertexts were generated using CTR mode with the same nonce.
+The nonce is implicit, so it is not included in the ciphertext.
 You also know that the plaintext P corresponding to C is:
 
 43 72 79 70 74 6F 67 72 61 70 68 79 20 43 72 79
@@ -126,11 +126,11 @@ P_i = C_i \oplus K_i$
 ---
 
 Just knowing that the nonce is shared between the two message is not enough to recover any information about the plaintext, since it is concatenated with the message counter.
-An attacker would need to know the nonce *and* the counter, cause a collision using a known plaintext and XOR it with the ciphertext of an intercepted message to decrypt that block. 
+An attacker would need to know the nonce *and* the counter, cause a collision using a known plaintext and XOR it with the ciphertext of an intercepted message to decrypt that block.
 
 In that case it would be the same as re-using the same key in a one-time-pad:
- 
-$C=P \oplus K | P \oplus$ 
+
+$C=P \oplus K | P \oplus$
 
 from here I get the key (by XORing both sides with P):
 $K=P \oplus C$

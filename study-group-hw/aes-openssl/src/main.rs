@@ -2,7 +2,7 @@ use std::iter::repeat;
 
 use openssl::{
     rsa::{Padding, Rsa},
-    symm::{decrypt, encrypt, Cipher},
+    symm::{decrypt, encrypt, Cipher, Crypter, Mode},
 };
 
 // https://www.openssl.org/docs/manmaster/man1/openssl-enc.html
@@ -84,6 +84,7 @@ fn question310() {
     assert_eq!(left, right)
 }
 
+// TODO : panics
 fn question44() {
     let key: [u8; 32] = [
         0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -103,7 +104,12 @@ fn question44() {
 
     let iv = ciphertext_with_iv[..16].to_owned();
     let ciphertext = ciphertext_with_iv[16..].to_owned();
-    let plaintext = decrypt(cipher, &key, Some(&iv), &ciphertext).unwrap();
+
+    let mut crypter = Crypter::new(cipher, Mode::Decrypt, &key, Some(&iv)).unwrap();
+    crypter.pad(false);
+
+    let mut plaintext: Vec<u8> = vec![0x0; 16];
+    crypter.update(&ciphertext, &mut plaintext).unwrap();
 
     println!("Question 4.4: {:?}", plaintext);
 }
