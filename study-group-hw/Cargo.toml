@@ -3,5 +3,6 @@
 members = [
   "vigenere",
   "rsa-benchmark",
-  "aes-openssl",  
+  "aes-openssl",
+  "sha_collision",
 ]

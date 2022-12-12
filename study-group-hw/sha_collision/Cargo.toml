@@ -1,0 +1,10 @@
+[package]
+name = "sha_collision"
+edition = "2021"
+version = "0.1.0"
+
+[dependencies]
+anyhow = { version = "1.0" }
+rand = "0.8.5"
+hex = "0.4.1"
+sha3 = "0.10.6"

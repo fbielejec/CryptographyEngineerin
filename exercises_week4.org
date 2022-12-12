@@ -1,0 +1,20 @@
+* reading
+https://uncloak.org/courses/rust+cryptography+engineering/course-2022-12-09+Session+4+Notes
+https://hackmd.io/ibBmMR3DQlO8tCPBU5-c2g#Syllabus
+
+* chapter 5
+** TODO Question 1
+/Justify or disqualify each of the following schemes, with message $m$, tag $t$, and ciphertext $c$:/
+
+1. $t=MAC(m), c=E(m), \text{send} (c,t)$
+2. $t=MAC(m), c=E(m||t), \text{send} (c)$
+3. $c=E(m), t=MAC(c), \text{send} (c,t)$
+
+*Ad 1.*
+
+
+** TODO Question 2
+/You're the adversary, watching a TLS handshake. Pick three steps from [[https://wiki.osdev.org/TLS_Handshake#Handshake_Overview][TLS Handshake - OSDev Wiki]], and describe how the step prevents you from (pick one):/
+- reading message content (confidentiality)
+- tampering with message content (integrity)
+- impersonating either party (authenticity)

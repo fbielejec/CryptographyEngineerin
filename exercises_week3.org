@@ -1,15 +1,14 @@
 * url
-https://uncloak.org/courses/rust+cryptography+engineering/course-2022-12-02+Session+3+Noteswygrzew1
-* chapter 5
-** TODO Question 1
-/Justify or disqualify each of the following schemes, with message $m$, tag $t$, and ciphertext $c$:/
-
-- $t=MAC(m), c=E(m), \text{send} (c,t)$
-- $t=MAC(m), c=E(m||t), \text{send} (c)$
-- $c=E(m), t=MAC(c), \text{send} (c,t)$
-
-** TODO Question 2
-/You're the adversary, watching a TLS handshake. Pick three steps from [[https://wiki.osdev.org/TLS_Handshake#Handshake_Overview][TLS Handshake - OSDev Wiki]], and describe how the step prevents you from (pick one):/
-- reading message content (confidentiality)
-- tampering with message content (integrity)
-- impersonating either party (authenticity)
+https://uncloak.org/courses/rust+cryptography+engineering/course-2022-12-02+Session+3+Notes
+* Chapter 5
+** DONE Exercise 5.3
+/Consider SHA-512-n, a hash function that first runs SHA-512 and then outputs only the first  bits of the result. 
+Write a program that uses a birthday attack to find and output a collision on SHA-512-n, where n is a multiple of 8 between 8 and 48. 
+Your program may use an existing cryptography library. 
+Time how long your program takes when n is 16, averaged over five runs for each  How long would you expect your program to take for SHA-512-256? For SHA-512?/
+** IN-PROGRESS Exercise 5.4
+/Let SHA-512-n be as in the previous exercise. 
+Write a program that finds a message M that hashes to the following value under SHA-512-16 (in hex): 3D 4B. 
+How many tries would you expect the algorithm to need? 
+Running the algorithm 5 times, how many tries did it take on average?/
+* Chapter 6
