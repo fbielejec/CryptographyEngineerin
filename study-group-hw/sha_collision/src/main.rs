@@ -23,7 +23,7 @@ fn exercise5_3(n: usize) -> Option<(usize, usize)> {
 fn exercise5_4(expected_hash: &[u8]) -> Option<usize> {
     (1usize..100_000)
         .into_iter()
-        .find(|m| sha_512_n(&m.to_le_bytes(), 16).eq(expected_hash))
+        .find(|m| sha_512_n(&m.to_le_bytes(), 2).eq(expected_hash))
 }
 
 fn main() {
@@ -43,7 +43,12 @@ fn main() {
 
     let expected_hash = [0x3d, 0x4b];
     match exercise5_4(&expected_hash) {
-        Some(message) => println!("{}{:?}", message, sha_512_n(&message.to_le_bytes(), 16)),
+        Some(message) => println!(
+            "{}{:?} - {:?}",
+            message,
+            sha_512_n(&message.to_le_bytes(), 16),
+            &expected_hash
+        ),
         None => println!("No match found for {:?}", expected_hash),
     }
 }
