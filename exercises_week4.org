@@ -16,7 +16,7 @@ There is a problem here - basically MACs do not provide message confidentiality 
 The MAC could for example would output some bits of the plaintext as part of it, and this would leak these bits in the ciphertext, breaking CPA security.
 
 *Ad 2.*
-This is basically how SSL (TLS 1.2) works (mac then encrypt) and may be insecure against chosen ciphertext attack in some cases.
+This is basically how SSL works (MAC then encrypt) and may be insecure against chosen ciphertext attack in some cases.
 
 *Ad 3.*
 This is basically IPsec, and it's a secure approach (encrypt then MAC).
