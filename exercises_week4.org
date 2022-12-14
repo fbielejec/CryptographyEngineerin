@@ -3,7 +3,7 @@ https://uncloak.org/courses/rust+cryptography+engineering/course-2022-12-09+Sess
 https://hackmd.io/ibBmMR3DQlO8tCPBU5-c2g#Syllabus
 
 * chapter 5
-** TODO Question 1
+** DONE Question 1
 /Justify or disqualify each of the following schemes, with message $m$, tag $t$, and ciphertext $c$:/
 
 1. $t=MAC(m), c=E(m), \text{send} (c,t)$
@@ -11,7 +11,17 @@ https://hackmd.io/ibBmMR3DQlO8tCPBU5-c2g#Syllabus
 3. $c=E(m), t=MAC(c), \text{send} (c,t)$
 
 *Ad 1.*
+This is SSH, tag is computed on the message and concatenated in the clear to the ciphertext (encrypt and MAC).
+There is a problem here - basically MACs do not provide message confidentiality (only message integrity).
+The MAC could for example would output some bits of the plaintext as part of it, and this would leak these bits in the ciphertext, breaking CPA security.
 
+*Ad 2.*
+This is basically how SSL works (mac then encrypt) and may be insecure against chosen ciphertext attack in some cases.
+
+*Ad 3.*
+This is basically IPsec, and it's a secure approach (encrypt then MAC).
+Because we encrypt the message first and then compute the tag on the ciphertext we "lock" the tag to that message, i.e. no one can produce a different ciphertext that has the same MAC (verifies to the same MAC).
+In other words it always provides authenticated encryption.
 
 ** TODO Question 2
 /You're the adversary, watching a TLS handshake. Pick three steps from [[https://wiki.osdev.org/TLS_Handshake#Handshake_Overview][TLS Handshake - OSDev Wiki]], and describe how the step prevents you from (pick one):/

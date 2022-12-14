@@ -6,9 +6,18 @@ https://uncloak.org/courses/rust+cryptography+engineering/course-2022-12-02+Sess
 Write a program that uses a birthday attack to find and output a collision on SHA-512-n, where n is a multiple of 8 between 8 and 48. 
 Your program may use an existing cryptography library. 
 Time how long your program takes when n is 16, averaged over five runs for each  How long would you expect your program to take for SHA-512-256? For SHA-512?/
-** IN-PROGRESS Exercise 5.4
+** DONE Exercise 5.4
 /Let SHA-512-n be as in the previous exercise. 
 Write a program that finds a message M that hashes to the following value under SHA-512-16 (in hex): 3D 4B. 
 How many tries would you expect the algorithm to need? 
 Running the algorithm 5 times, how many tries did it take on average?/
 * Chapter 6
+** IN-PROGRESS Exercise 6.3
+/Suppose $a$ and $b$ are both one block long, and suppose the sender MACs $a$, $b$, and $a || b$ with CBC-MAC. 
+An attacker who intercepts the MAC tags for these messages can now forge the MAC for the message: 
+
+$m=b||(M(b) \oplus M(a) \oplus b)$, 
+
+which the sender never sent. 
+The forged tag for this message is equal to $M(a||b)$ , the tag for $a||b$. 
+Justify mathematically why this is true./
