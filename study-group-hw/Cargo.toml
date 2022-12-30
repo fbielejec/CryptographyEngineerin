@@ -5,4 +5,5 @@ members = [
   "rsa-benchmark",
   "aes-openssl",
   "sha_collision",
+  "session_5",
 ]
