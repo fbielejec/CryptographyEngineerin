@@ -8,6 +8,14 @@ anyhow = "1.0.68"
 thiserror = "1.0.38"
 coinflip = "0.1.1"
 
+[dev-dependencies]
+## Bench ##
+criterion = "0.3"
+
+[[bench]]
+name = "bench"
+harness = false
+
 [features]
 malicious = [
 ]

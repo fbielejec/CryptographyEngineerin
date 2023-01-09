@@ -1,3 +1,7 @@
+//
+// cargo bench
+//
+
 #![allow(unused_imports)]
 use std::{thread, time};
 

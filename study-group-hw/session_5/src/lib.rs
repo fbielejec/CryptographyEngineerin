@@ -1,44 +1,55 @@
-use anyhow::{bail, Error as AnyError};
-use coinflip::flip;
-use thiserror::Error as ThisError;
+pub mod error {
+    use anyhow::{bail, Error as AnyError};
+    use coinflip::flip;
+    use thiserror::Error as ThisError;
 
-// returns anyerror
-pub fn can_fail_1() -> Result<(), AnyError> {
-    if flip() {
-        bail!("Hmm something went wrong ")
+    // returns anyerror
+    pub fn can_fail_1() -> Result<(), AnyError> {
+        if flip() {
+            bail!("Hmm something went wrong ")
+        }
+        Ok(())
     }
-    Ok(())
-}
 
-#[derive(ThisError, Debug)]
-pub enum MyError {
-    #[error(transparent)]
-    Anyhow(#[from] anyhow::Error),
-    #[error("unknown error occured")]
-    Unknown,
-}
-
-// returns myerror
-pub fn can_fail_2() -> Result<(), MyError> {
-    if flip() {
-        return Err(MyError::Unknown);
+    #[derive(ThisError, Debug)]
+    pub enum MyError {
+        #[error(transparent)]
+        Anyhow(#[from] anyhow::Error),
+        #[error("unknown error occured")]
+        Unknown,
     }
-    Ok(())
-}
 
-pub fn can_fail() -> Result<(), MyError> {
-    match can_fail_1() {
-        Ok(_) => match can_fail_2() {
-            Ok(_) => Ok(()),
+    // returns myerror
+    pub fn can_fail_2() -> Result<(), MyError> {
+        if flip() {
+            return Err(MyError::Unknown);
+        }
+        Ok(())
+    }
+
+    pub fn can_fail() -> Result<(), MyError> {
+        match can_fail_1() {
+            Ok(_) => match can_fail_2() {
+                Ok(_) => Ok(()),
+                Err(why) => {
+                    println!("fn 'can_fail_2' failed because: {}", why);
+                    Err(why)
+                }
+            },
             Err(why) => {
-                println!("fn 'can_fail_2' failed because: {}", why);
-                Err(why)
+                println!("fn 'can_fail_1' failed because: {}", why);
+                // converts anyhow to myerror
+                Err(why.into())
             }
-        },
-        Err(why) => {
-            println!("fn 'can_fail_1' failed because: {}", why);
-            // converts anyhow to myerror
-            Err(why.into())
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+        #[test]
+        fn test_it() {
+            can_fail().ok();
         }
     }
 }
@@ -51,7 +62,7 @@ mod type_level_program {
     struct Mutable;
     struct Immutable;
 
-    #[repr(transparent)]
+    // #[repr(transparent)]
     struct MyStateMachine<State> {
         data: u32,
         _phantom: PhantomData<State>,
@@ -157,6 +168,28 @@ mod malicious_feature {
     }
 }
 
-pub fn main() {
-    can_fail().ok();
+// TODO
+/*
+implement a program that loops 1000 times, repeatedly branching on secret data (say, equality to number 123456789012345678), taking the left path in execution A and the right path in execution B.
+Benchmark your program.
+Determine if your benchmarks are statistically different.
+Try this first with a single u64, then repeat the experiment making your secret data a vector of length 100 u64's.
+ */
+pub mod secret_data_branching {
+
+    pub const SECRET: u64 = 123456789012345678;
+
+    pub fn fn_with_side_channel(value: u64) -> (u32, u32) {
+        let mut left = 0;
+        let mut right = 0;
+
+        for _i in 0..1000 {
+            match value {
+                SECRET => left += 1,
+                _ => right += 1,
+            }
+        }
+
+        (left, right)
+    }
 }
