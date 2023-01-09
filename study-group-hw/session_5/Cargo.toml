@@ -7,3 +7,7 @@ edition = "2021"
 anyhow = "1.0.68"
 thiserror = "1.0.38"
 coinflip = "0.1.1"
+
+[features]
+malicious = [
+]
