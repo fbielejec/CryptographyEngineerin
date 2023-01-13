@@ -6,4 +6,5 @@ members = [
   "aes-openssl",
   "sha_collision",
   "session_5",
+  "session_7",  
 ]
